@@ -8,7 +8,7 @@ import { UserContextProvider } from "./userContext";
 import { Routes, Route } from "react-router";
 import Account from "./pages/account";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://travel-go-server-d825.onrender.com";
 axios.defaults.withCredentials = true;
 
 function App() {
