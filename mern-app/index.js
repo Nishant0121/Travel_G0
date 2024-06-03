@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173", // Replace with your frontend's actual origin
+    origin: "https://travel-g0.vercel.app", // Replace with your frontend's actual origin
   })
 );
 
