@@ -1,5 +1,6 @@
 import "./App.css";
 import Layout from "./layout";
+import Login from "./pages/login";
 
 import { UserContextProvider } from "./userContext";
 import { Routes, Route } from "react-router";
@@ -9,8 +10,8 @@ function App() {
     <UserContextProvider>
       <Routes>
         <Route to="/" element={<Layout />}>
-          <Route index element={<div>About</div>} />
-          <Route path="/about" element={<div>kaka</div>} />
+          <Route path="/" element={<div>About</div>} />
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
     </UserContextProvider>
