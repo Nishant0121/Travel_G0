@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   const { isOpen, setIsOpen } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const togglemenu = () => {
     setIsOpen(!isOpen);
   };
+  console.log(user);
   return (
     <div>
       <div className="header flex items-center justify-between">
@@ -19,7 +21,7 @@ export default function Header() {
           <div className=" rounded-full text-lg px-3 py-0.5 m-2">About</div>
           <div className=" rounded-full text-lg px-3 py-0.5 m-2">Contact</div>
           <Link
-            to={"/login"}
+            to={user ? "/account" : "/login"}
             className=" rounded-full text-lg profile flex items-center px-2 m-2"
           >
             <div className="h-6 w-6">
