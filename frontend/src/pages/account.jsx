@@ -17,7 +17,7 @@ export default function Account() {
       // Redirect to the login page or perform any other action after logout
       // For example, you can redirect to the login page
       localStorage.clear();
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (error) {
       console.error("Logout failed", error);
       // Handle logout failure if needed
