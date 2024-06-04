@@ -119,6 +119,15 @@ app.post("/addplaces", async (req, res) => {
   }
 });
 
+app.get("/places", async (req, res) => {
+  try {
+    const places = await Place.find();
+    res.json(places);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
