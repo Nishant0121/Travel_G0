@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const User = require("./model/user_model");
+const Place = require("./model/place_model");
 
 require("dotenv").config(); // Load environment variables
 
@@ -96,6 +97,26 @@ app.post("/login", async (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.clearCookie("token").json({ message: "Logout successful" });
+});
+
+app.post("/addplaces", async (req, res) => {
+  const { name, location, description, price, imgurl, category, userId } =
+    req.body;
+  try {
+    const newPlace = new Place({
+      name,
+      location,
+      description,
+      price,
+      imgurl,
+      category,
+      userId,
+    });
+    await newPlace.save();
+    res.json(newPlace);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(PORT, () => {

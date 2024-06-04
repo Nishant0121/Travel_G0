@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -127,7 +128,7 @@ export default function Register() {
         </div>
       ) : (
         <div className=" flex  items-center justify-center">
-          <form className=" max-w-72 p-3 rounded-lg bg-blue-50 dark:bg-blue-950 shadow-lg min-w-72 mx-auto">
+          <form className=" max-w-md mt-10 mx-3  shadow-lg rounded-lg dark:bg-blue-950 bg-light dark:text-light text-dark p-3">
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="email"
