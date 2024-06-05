@@ -13,7 +13,7 @@ import Place from "./pages/place";
 import AddFlight from "./pages/addflight";
 import Flights from "./pages/flights";
 
-axios.defaults.baseURL = "hhttps://travel-go-server-d825.onrender.com";
+axios.defaults.baseURL = "https://travel-go-server-d825.onrender.com";
 axios.defaults.withCredentials = true;
 
 function App() {
