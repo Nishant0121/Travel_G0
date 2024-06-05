@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const User = require("./model/user_model");
 const Place = require("./model/place_model");
+const Flight = require("./model/flight_model");
 
 require("dotenv").config(); // Load environment variables
 
@@ -138,6 +139,7 @@ app.get("/user/:userId", async (req, res) => {
     res.status(404).json({ message: "User not found" });
   }
 });
+
 app.get("/place/:placeId", async (req, res) => {
   const placeId = req.params.placeId;
   const place = await Place.findById(placeId);
@@ -146,6 +148,25 @@ app.get("/place/:placeId", async (req, res) => {
     res.json(place);
   } else {
     res.status(404).json({ message: "Place not found" });
+  }
+});
+
+app.post("/addflight", async (req, res) => {
+  try {
+    const newflight = new Flight(req.body);
+    await newflight.save();
+    res.status(201).send("Advertisement created successfully");
+  } catch (error) {
+    res.status(500).send("Error creating advertisement");
+  }
+});
+
+app.get("/flights", async (req, res) => {
+  try {
+    const flights = await Flight.find();
+    res.json(flights);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

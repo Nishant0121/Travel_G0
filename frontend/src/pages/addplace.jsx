@@ -109,141 +109,150 @@ export default function AddPlaceForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col w-full items-center justify-center mt-3">
-          <div className=" flex flex-col min-w-max max-w-lg">
-            <div className=" m-2 p-2 rounded-lg">
-              <input
-                className="rounded-lg px-2 py-1 text-dark"
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className=" m-2 p-2 rounded-lg">
-              <input
-                className="rounded-lg px-2 py-1 text-dark"
-                name="location"
-                placeholder="Location"
-                value={formData.location}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className=" m-2 p-2 rounded-lg">
-              <textarea
-                className="rounded-lg px-2 py-1 text-dark"
-                name="description"
-                placeholder="Description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className=" m-2 p-2 rounded-lg">
-              <input
-                className="rounded-lg px-2 py-1 text-dark"
-                name="price"
-                type="number"
-                placeholder="Price"
-                value={formData.price}
-                onChange={handleChange}
-                required
-              />
-            </div>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 max-w-2xl mx-auto p-6 bg-light dark:bg-dark text-dark dark:text-light shadow-md rounded-lg mt-10"
+      >
+        <h2 className="text-2xl font-bold mb-4">Add a New Place</h2>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium " htmlFor="name">
+              Name
+            </label>
+            <input
+              className="mt-1 text-dark block w-full p-2 border rounded-md shadow-sm"
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium " htmlFor="location">
+              Location
+            </label>
+            <input
+              className="mt-1 text-dark block w-full p-2 border rounded-md shadow-sm"
+              type="text"
+              id="location"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium " htmlFor="description">
+              Description
+            </label>
+            <textarea
+              className="mt-1 text-dark block w-full p-2 border rounded-md shadow-sm"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium " htmlFor="price">
+              Price
+            </label>
+            <input
+              className="mt-1 text-dark block w-full p-2 border rounded-md shadow-sm"
+              type="number"
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
           </div>
         </div>
 
-        <div className=" flex flex-col w-full items-center justify-center mt-3">
-          <label
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            htmlFor="file_input"
-          >
-            Upload file
-          </label>
-          <input
-            className="block  text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            type="file"
-            accept="image/*"
-            name="image"
-            onChange={onImageChange}
-          />
-          <p
-            className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-            id="file_input_help"
-          >
-            Upload Images Only
-          </p>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium " htmlFor="file_input">
+              Upload Image
+            </label>
+            <input
+              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+              type="file"
+              accept="image/*"
+              id="file_input"
+              onChange={onImageChange}
+            />
+            <p className="mt-1 text-sm text-gray-500">Upload Images Only</p>
+          </div>
+
+          <div className="flex flex-wrap gap-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="category"
+                value="beach"
+                checked={formData.category === "beach"}
+                onChange={handleCategoryChange}
+              />
+              <span className="ml-2">Beach</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="category"
+                value="mountains"
+                checked={formData.category === "mountains"}
+                onChange={handleCategoryChange}
+              />
+              <span className="ml-2">Mountains</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="category"
+                value="city"
+                checked={formData.category === "city"}
+                onChange={handleCategoryChange}
+              />
+              <span className="ml-2">City</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="category"
+                value="forest"
+                checked={formData.category === "forest"}
+                onChange={handleCategoryChange}
+              />
+              <span className="ml-2">Forest</span>
+            </label>
+          </div>
+
+          <div className="w-full">
+            <progress
+              className="w-full h-2 rounded-full bg-gray-200"
+              value={imgper}
+              max={100}
+            ></progress>
+            <p className="text-center mt-1">{imgper}%</p>
+          </div>
         </div>
 
-        <div className="flex  w-full items-center justify-center mt-3">
-          <label className="mx-3 p-2">
-            <input
-              type="radio"
-              name="category"
-              value="beach"
-              checked={formData.category === "beach"}
-              onChange={handleCategoryChange}
-            />
-            Beach
-          </label>
-          <label className="mx-3 p-2">
-            <input
-              type="radio"
-              name="category"
-              value="mountains"
-              checked={formData.category === "mountains"}
-              onChange={handleCategoryChange}
-            />
-            Mountains
-          </label>
-          <label className="mx-3 p-2">
-            <input
-              type="radio"
-              name="category"
-              value="city"
-              checked={formData.category === "city"}
-              onChange={handleCategoryChange}
-            />
-            City
-          </label>
-          <label className="mx-3 p-2">
-            <input
-              type="radio"
-              name="category"
-              value="forest"
-              checked={formData.category === "forest"}
-              onChange={handleCategoryChange}
-            />
-            Forest
-          </label>
-        </div>
-        <div className="flex flex-col w-full items-center justify-center mt-3">
-          <progress
-            className="progress rounded-full bg-black dark:bg-white"
-            value={imgper}
-            max={100}
-          ></progress>
-          <span>
-            <p className="mx-2">{imgper}%</p>
-          </span>
-        </div>
-
-        <div className=" flex flex-col w-full items-center justify-center mt-3">
+        <div className="flex justify-center mt-6">
           {imgper === 100 && (
             <button
-              className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-1 text-center me-2 mb-2"
+              className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200"
               type="submit"
             >
               Add Place
             </button>
           )}
-
-          {/* Hidden input for userId */}
-          <input type="hidden" name="userId" value={formData.userId} />
         </div>
+
+        {/* Hidden input for userId */}
+        <input type="hidden" name="userId" value={formData.userId} />
       </form>
     </>
   );

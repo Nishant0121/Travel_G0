@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import homebg from "../assets/travel_go_bg.jpeg";
+import flight from "../assets/flight.jpg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Loader from "../components/loader";
@@ -27,6 +28,12 @@ export default function Home() {
             alt="Travel background"
           />
         </div>
+      </div>
+      <div className=" grid grid-cols-2 md:grid-cols-3">
+        <Link className=" my-2" to={"/flights"}>
+          <img className=" h-44 rounded-lg" src={flight} alt="" srcSet="" />
+          <h1>Flights </h1>
+        </Link>
       </div>
       <>
         {places ? (
