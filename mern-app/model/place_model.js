@@ -10,4 +10,5 @@ const PlaceSchema = new mongoose.Schema({
   category: { type: String, required: true }, // Add category field
 });
 
-module.exports = mongoose.model("Place", PlaceSchema);
+const place_model = mongoose.model("Place", PlaceSchema);
+module.exports = place_model;

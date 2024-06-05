@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router";
 import Account from "./pages/account";
 import AddPlaceForm from "./pages/addplace";
 import Home from "./pages/home";
+import Place from "./pages/place";
 
 axios.defaults.baseURL = "https://travel-go-server-d825.onrender.com";
 axios.defaults.withCredentials = true;
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
           <Route path="/addplaces" element={<AddPlaceForm />} />
+          <Route path="/place/:placeId" element={<Place />} />
         </Route>
       </Routes>
     </UserContextProvider>

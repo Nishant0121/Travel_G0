@@ -128,6 +128,27 @@ app.get("/places", async (req, res) => {
   }
 });
 
+app.get("/user/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findById(userId);
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
+});
+app.get("/place/:placeId", async (req, res) => {
+  const placeId = req.params.placeId;
+  const place = await Place.findById(placeId);
+
+  if (place) {
+    res.json(place);
+  } else {
+    res.status(404).json({ message: "Place not found" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
