@@ -8,6 +8,7 @@ const flightSchema = new mongoose.Schema({
   departureDate: Date,
   arrivalDate: Date,
   additionalInfo: String,
+  price: Number,
 });
 
 const Flight_model = mongoose.model("Flight", flightSchema);

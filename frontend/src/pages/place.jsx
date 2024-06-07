@@ -5,8 +5,17 @@ import Loader from "../components/loader";
 
 export default function Place() {
   const { placeId } = useParams();
+
   const [place, setPlace] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userdata = JSON.parse(localStorage.getItem("user"));
+    if (userdata && userdata.user && userdata.user._id) {
+      setUserId(userdata.user._id);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPlace = async () => {
@@ -33,6 +42,19 @@ export default function Place() {
       fetchUser();
     }
   }, [place]);
+
+  const addToPackage = async () => {
+    try {
+      const response = await axios.post("/placepackage", {
+        userId,
+        placeId,
+      });
+      console.log("Package updated:", response.data);
+      alert("Added");
+    } catch (error) {
+      console.error("Error adding product to package:", error);
+    }
+  };
 
   return (
     <div className="m-3 md:m-6 lg:m-10">
@@ -63,6 +85,7 @@ export default function Place() {
             <h1>{place.description}</h1>
             <h1 className="text-xl font-bold">₹ {place.price}</h1>
           </div>
+          <button onClick={addToPackage}> Add To Package</button>
         </div>
       ) : (
         <Loader />

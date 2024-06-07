@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const User = require("./model/user_model");
 const Place = require("./model/place_model");
 const Flight = require("./model/flight_model");
+const Package = require("./model/package_model");
+const FlightPackage = require("./model/flightpack_model");
 
 require("dotenv").config(); // Load environment variables
 
@@ -142,12 +144,17 @@ app.get("/user/:userId", async (req, res) => {
 
 app.get("/place/:placeId", async (req, res) => {
   const placeId = req.params.placeId;
-  const place = await Place.findById(placeId);
 
-  if (place) {
-    res.json(place);
-  } else {
-    res.status(404).json({ message: "Place not found" });
+  try {
+    const place = await Place.findById(placeId);
+    if (place) {
+      res.json(place);
+    } else {
+      res.status(404).json({ message: "Place not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -167,6 +174,147 @@ app.get("/flights", async (req, res) => {
     res.json(flights);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/placepackage", async (req, res) => {
+  const { userId, placeId } = req.body;
+
+  try {
+    let userPackage = await Package.findOne({ userId });
+
+    if (!userPackage) {
+      userPackage = new Package({ userId, placeId: [placeId] });
+    } else {
+      userPackage.products.push(placeId);
+    }
+
+    await userPackage.save();
+    res.status(200).json(userPackage);
+  } catch (err) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.get("/package/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  // Validate the userId
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ error: "Invalid userId format" });
+  }
+
+  try {
+    // Convert userId to ObjectId
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+    const pack = await Package.findOne({ userId: userObjectId });
+    if (pack) {
+      res.json(pack);
+    } else {
+      res.status(404).json({ message: "Package not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+app.get("/flightpackage/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  // Validate the userId
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ error: "Invalid userId format" });
+  }
+
+  try {
+    // Convert userId to ObjectId
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+    const pack = await FlightPackage.findOne({ userId: userObjectId });
+    if (pack) {
+      res.json(pack);
+    } else {
+      res.status(404).json({ message: "Package not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.post("/flightpackage/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const { flightId } = req.body;
+
+  try {
+    // Find the user's package
+    let userPackage = await FlightPackage.findOne({ userId });
+
+    if (!userPackage) {
+      // If no package exists for the user, create a new one
+      userPackage = new FlightPackage({ userId, products: [] });
+    }
+
+    // Add the flight to the package
+    userPackage.products.push(flightId);
+
+    // Save the updated package
+    await userPackage.save();
+
+    res.status(200).json({ message: "Flight added to package successfully" });
+  } catch (error) {
+    console.error("Error adding flight to package:", error);
+    res.status(500).json({ message: "Failed to add flight to package" });
+  }
+});
+
+app.get("/flight/:flightId", async (req, res) => {
+  const flightId = req.params.flightId;
+
+  try {
+    const flight = await Flight.findById(flightId);
+    if (flight) {
+      res.json(flight);
+    } else {
+      res.status(404).json({ message: "Flight not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.delete("/fpack/:packageId/flight/:flightId", async (req, res) => {
+  try {
+    const { packageId, flightId } = req.params;
+    const updatedPackage = await FlightPackage.findByIdAndUpdate(
+      packageId,
+      { $pull: { products: flightId } },
+      { new: true }
+    );
+    if (updatedPackage) {
+      res.status(200).json({
+        message: "Flight deleted from package successfully",
+        updatedPackage,
+      });
+    } else {
+      res.status(404).json({ message: "Package not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete flight from package" });
+  }
+});
+
+app.delete("/pack/:packageId/place/:placeId", async (req, res) => {
+  try {
+    const { packageId, placeId } = req.params;
+    await Package.findByIdAndUpdate(packageId, {
+      $pull: { products: placeId },
+    });
+    res
+      .status(200)
+      .json({ message: "Place deleted from package successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete place from package" });
   }
 });
 

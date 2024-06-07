@@ -9,6 +9,7 @@ export default function AdvertisementForm() {
     departureDate: "",
     arrivalDate: "",
     additionalInfo: "",
+    price: "",
   });
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function AdvertisementForm() {
       <h2 className="text-2xl font-bold mb-4">Add a new Flight Service</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-sm font-medium " htmlFor="flightNumber">
+          <label className="block text-sm font-medium" htmlFor="flightNumber">
             Flight Number
           </label>
           <input
@@ -65,7 +66,7 @@ export default function AdvertisementForm() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium " htmlFor="departureCity">
+          <label className="block text-sm font-medium" htmlFor="departureCity">
             Departure City
           </label>
           <input
@@ -80,7 +81,7 @@ export default function AdvertisementForm() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium " htmlFor="arrivalCity">
+          <label className="block text-sm font-medium" htmlFor="arrivalCity">
             Arrival City
           </label>
           <input
@@ -95,7 +96,7 @@ export default function AdvertisementForm() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium " htmlFor="departureDate">
+          <label className="block text-sm font-medium" htmlFor="departureDate">
             Departure Date
           </label>
           <input
@@ -110,7 +111,7 @@ export default function AdvertisementForm() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium " htmlFor="arrivalDate">
+          <label className="block text-sm font-medium" htmlFor="arrivalDate">
             Arrival Date
           </label>
           <input
@@ -125,10 +126,22 @@ export default function AdvertisementForm() {
         </div>
 
         <div className="mb-4">
-          <label
-            className="block text-sm font-medium "
-            htmlFor="additionalInfo"
-          >
+          <label className="block text-sm font-medium" htmlFor="price">
+            Price
+          </label>
+          <input
+            className="mt-1 text-dark p-2 w-full border rounded-md"
+            type="number"
+            id="price"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium" htmlFor="additionalInfo">
             Additional Information
           </label>
           <textarea
