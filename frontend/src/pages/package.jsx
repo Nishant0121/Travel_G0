@@ -147,7 +147,6 @@ export default function Package() {
       setProducts((prev) =>
         prev.filter((product) => product._id !== productId)
       );
-      window.location.reload();
     } catch (error) {
       console.error("Failed to delete place:", error);
     }
@@ -158,7 +157,6 @@ export default function Package() {
       await axios.delete(`/fpack/${flightpack._id}/flight/${flightId}`);
       setFlightIds((prev) => prev.filter((id) => id !== flightId));
       setFlight((prev) => prev.filter((flight) => flight._id !== flightId));
-      window.location.reload();
     } catch (error) {
       console.error("Failed to delete flight:", error);
     }

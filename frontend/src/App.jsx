@@ -13,6 +13,7 @@ import Place from "./pages/place";
 import AddFlight from "./pages/addflight";
 import Flights from "./pages/flights";
 import Package from "./pages/package";
+import Places from "./pages/places";
 
 axios.defaults.baseURL = "https://travel-go-server-d825.onrender.com";
 axios.defaults.withCredentials = true;
@@ -30,6 +31,7 @@ function App() {
           <Route path="/addflight" element={<AddFlight />} />
           <Route path="/place/:placeId" element={<Place />} />
           <Route path="/flights" element={<Flights />} />
+          <Route path="/places" element={<Places />} />
           <Route path="/pacakge" element={<Package />} />
         </Route>
       </Routes>
