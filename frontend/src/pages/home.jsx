@@ -47,7 +47,7 @@ export default function Home() {
           />
           <h1>Flights </h1>
         </Link>
-        <Link className="my-2" to={"/locations"}>
+        <Link className="my-2" to={"/places"}>
           <img
             className="h-44 rounded-lg w-full object-cover"
             src={location}
