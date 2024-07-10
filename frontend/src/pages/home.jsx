@@ -8,11 +8,19 @@ import Loader from "../components/loader";
 
 export default function Home() {
   const [places, setPlaces] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPlaces = async () => {
-      const response = await axios.get("/places");
-      setPlaces(response.data);
+      setLoading(true);
+      try {
+        const response = await axios.get("/places");
+        setPlaces(response.data);
+      } catch (error) {
+        console.error("Error fetching places:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchPlaces();
@@ -32,9 +40,9 @@ export default function Home() {
       <div className="my-2">
         <h1 className="font-bold text-4xl">Plan your trip with confidence</h1>
         <h1>
-          Were here to help you plan and book your next trip with Travel Go. You
-          can search for flights, hotels, and beautiful locations all in one
-          place.
+          {"We're"} here to help you plan and book your next trip with Travel
+          Go. You can search for flights, hotels, and beautiful locations all in
+          one place.
         </h1>
       </div>
       <div className="my-3 grid grid-cols-2 gap-3 md:grid-cols-3">
@@ -43,29 +51,29 @@ export default function Home() {
             className="h-44 rounded-lg w-full object-cover"
             src={flight}
             alt=""
-            srcSet=""
           />
-          <h1>Flights </h1>
+          <h1>Flights</h1>
         </Link>
         <Link className="my-2" to={"/places"}>
           <img
             className="h-44 rounded-lg w-full object-cover"
             src={location}
             alt=""
-            srcSet=""
           />
-          <h1>Locations </h1>
+          <h1>Locations</h1>
         </Link>
       </div>
       <>
         <h1 className="text-xl font-bold mb-2">Top Locations</h1>
-        {places ? (
+        {loading ? (
+          <Loader />
+        ) : (
           <div className="allplaces justify-between items-center flex flex-nowrap overflow-x-auto">
             {places.map((place) => (
               <Link
                 to={`/place/${place._id}`}
-                key={place._id} // Add the key prop here
-                className="flex flex-col items-center  rounded-lg flex-shrink-0 mx-2"
+                key={place._id}
+                className="flex flex-col items-center rounded-lg flex-shrink-0 mx-2"
               >
                 <img
                   className="h-40 w-56 object-cover rounded-lg"
@@ -82,8 +90,6 @@ export default function Home() {
               </Link>
             ))}
           </div>
-        ) : (
-          <Loader />
         )}
       </>
     </div>

@@ -85,7 +85,10 @@ export default function Place() {
             <h1>{place.description}</h1>
             <h1 className="text-xl font-bold">₹ {place.price}</h1>
           </div>
-          <button onClick={addToPackage}> Add To Package</button>
+          <button className="btn btn-accent mt-1" onClick={addToPackage}>
+            {" "}
+            Add To Package
+          </button>
         </div>
       ) : (
         <Loader />
